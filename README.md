@@ -1,2 +1,2 @@
 # Labs_IronHack
-The Lab from the Iron Dana Analytics Bootcamp.
+The Labs from the Ironhack Analytics Bootcamp.
