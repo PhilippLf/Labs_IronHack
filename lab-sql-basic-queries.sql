@@ -44,8 +44,9 @@ SELECT COUNT(staff_id)
 FROM sakila.staff;
 
 # 5.3 Determine how many films are available for rent and how many have been rented.
-SELECT COUNT(rental_id) 
-FROM sakila.rental;
+SELECT COUNT(rental_id)
+FROM sakila.rental
+WHERE return_date IS NULL;
 SELECT COUNT(inventory_id)
 FROM sakila.inventory;
 
@@ -75,4 +76,3 @@ WHERE title LIKE '%ARMAGEDDON%'
 SELECT title, special_features
 FROM sakila.film
 WHERE special_features LIKE '%Behind the Scenes%';
-
