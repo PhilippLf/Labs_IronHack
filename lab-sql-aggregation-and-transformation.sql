@@ -82,14 +82,11 @@ ORDER BY num_films DESC;
 # 2.
 SELECT
     staff_id,
-    CONCAT(first_name, ' ', last_name) AS employee_name,
     COUNT(*) AS num_rentals_processed
 FROM
     sakila.rental
-JOIN
-    staff ON rental.staff_id = staff.staff_id
 GROUP BY
-    staff_id, employee_name
+    staff_id
 ORDER BY
     num_rentals_processed DESC;
     
