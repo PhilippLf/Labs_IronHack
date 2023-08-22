@@ -83,14 +83,16 @@ FROM film
     JOIN inventory
     USING(film_id)
     RIGHT JOIN rental
-    USING(inventory_id);
+    USING(inventory_id)
+ORDER BY title;
     
-#SELECT COUNT(inventory_id) FROM inventory;
-
-#SELECT COUNT(inventory_id) FROM rental;
-
-#SELECT COUNT(inventory_id)
-#FROM inventory;
-#SELECT COUNT(inventory_id)
-#FROM rental
-#WHERE return_date IS NULL;
+SELECT *,
+	CASE
+		WHEN return_date IS NULL
+        THEN 'NOT Available'
+		ELSE 'Available'
+	END AS availability_status
+FROM rental
+JOIN inventory
+USING(inventory_id)
+ORDER BY inventory_id;
