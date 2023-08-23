@@ -36,7 +36,7 @@ FROM category
 GROUP BY category.name;
 
 # 5. Identify the film categories with the longest average running time.
-SELECT category.name, AVG(length) AS avg_running_time
+SELECT category.name, ROUND(AVG(length),2) AS avg_running_time
 FROM category
 	JOIN film_category
     USING(category_id)
@@ -73,7 +73,9 @@ WHERE store_id = 1 AND title = 'ACADEMY DINOSAUR';
 # Note that there are 42 titles that are not in the inventory,
 # and this information can be obtained using a CASE statement combined with IFNULL."
 SELECT
-	DISTINCT(title),
+	#DISTINCT(title),
+    COUNT(inventory_id),
+    title,
 	CASE
 		WHEN return_date IS NULL
         THEN 'NOT Available'
@@ -84,15 +86,6 @@ FROM film
     USING(film_id)
     RIGHT JOIN rental
     USING(inventory_id)
+#WHERE return_date IS NULL
+GROUP BY title, availability_status
 ORDER BY title;
-    
-SELECT *,
-	CASE
-		WHEN return_date IS NULL
-        THEN 'NOT Available'
-		ELSE 'Available'
-	END AS availability_status
-FROM rental
-JOIN inventory
-USING(inventory_id)
-ORDER BY inventory_id;
