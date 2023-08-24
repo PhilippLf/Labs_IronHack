@@ -48,17 +48,24 @@ SELECT title
 FROM film
 	JOIN film_actor
 	USING(film_id)
-WHERE actor_id IN (SELECT actor_id, COUNT(film_id) AS num_of_movies
-FROM film_actor
-GROUP BY actor_id
-HAVING num_of_movies = (SELECT COUNT(film_id) AS num_of_movies
-				   FROM film_actor
-				   GROUP BY actor_id
-			       ORDER BY num_of_movies DESC
-				   LIMIT 1));
-
-
-
+WHERE actor_id = (SELECT actor_id
+				  FROM film_actor
+				  GROUP BY actor_id
+				  ORDER BY COUNT(film_id) DESC
+				  LIMIT 1);
 
 # 7.
-
+#SELECT * FROM film
+#WHERE film_id IN (
+#	SELECT film_id IN inventory
+    
+# 8. Retrieve the client_id and the total_amount_spent of those clients who spent more than the average of the total_amount spent by each client.
+# You can use subqueries to accomplish this.
+SELECT customer_id, SUM(amount) AS total_amount_spent
+FROM payment
+GROUP BY customer_id
+HAVING total_amount_spent > (SELECT AVG(total_pc)
+                             FROM (SELECT sum(amount) AS total_pc
+					               FROM payment
+                                   GROUP BY customer_id) AS total)
+ORDER BY total_amount_spent DESC;
